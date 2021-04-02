@@ -54,7 +54,7 @@
             <a href="#nav-member" id="member-tab" class="nav-link text-light pl-4" role="tab" data-toggle="tab" aria-controls="nav-member" aria-selected="false">Member</a></li>
             </li>
             <li>
-            <a href="#nav-messages" id="messages-tab" class="nav-link text-light pl-4" role="tab" data-toggle="tab" aria-controls="nav-messages" aria-selected="false">Messages</a></li>
+            <a href="#nav-pembayaran" id="pembayaran-tab" class="nav-link text-light pl-4" role="tab" data-toggle="tab" aria-controls="nav-pembayaran" aria-selected="false">Pembayaran</a></li>
             </li>
         </ul>
 	</div>
@@ -69,7 +69,7 @@
                     <p>Admin Dashboard</p>
                 </div>
                 <div class="tab-pane fade" id="nav-team" role="tabpanel" aria-labelledby="team-tab">
-                    <h3>Teams : 26</h3>
+                    <h3>Teams : {{ $team->count() }}</h3>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -78,9 +78,7 @@
                             <th scope="col">Leader ID</th>
                             <th scope="col">Category</th>
                             <th scope="col">Referrer</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Update</th>
-                            <th scope="col">Download</th>
+                            <th scope="col">Download Answer</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -91,23 +89,14 @@
                             <td>{{  $teams['leader_id'] }}</td>
                             <td>{{  $teams['category'] }}</td>
                             <td>{{  $teams['referrer'] }}</td>
-                            <td>Belum bayar</td>
-                            <form action="#" method="POST">
-                                <td><button name="update" type="submit" value="1" class="update_btn"><span class="badge bg-success"><i class="fas fa-check"></i></span></button>
-                                <button name="update" type="submit" value="2" class="update_btn"><span class="badge bg-danger"><i class="fas fa-times"></i></span></button>
-                            </td>
-                            </form>
-                            <form action="#" method="POST">
-                                <td><button name="download" type="submit" value="1" class="download_btn"><i class="fas fa-download"></i></button>
-                            </td>
-                            </form>
+                            <td></td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
                 </div>
                 <div class="tab-pane fade" id="nav-member" role="tabpanel" aria-labelledby="member-tab">
-                <h3>Members : 126</h3>
+                <h3>Members : {{ $member->count() }}</h3>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -117,8 +106,7 @@
                             <th scope="col">Email</th>
                             <th scope="col">Line ID</th>
                             <th scope="col">Phone Number</th>
-                            <th scope="col">Student Card</th>
-                            <th scope="col">Download</th>
+                            <th scope="col">Download Student Card</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -130,17 +118,46 @@
                             <td>{{  $members['email'] }}</td>
                             <td>{{  $members['lineid'] }}</td>
                             <td>{{  $members['phone'] }}</td>
-                            <td>{{  $members['studentcard'] }}</td>
-                            <form action="#" method="POST">
-                                <td><button name="download" type="submit" value="1" class="download_btn"><i class="fas fa-download"></i></button>
-                            </td>
+                            <td><</td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
-                <div class="tab-pane fade" id="nav-messages" role="tabpanel" aria-labelledby="messages-tab">
-                    <p>Messages Dashboard</p>
+                <div class="tab-pane fade" id="nav-pembayaran" role="tabpanel" aria-labelledby="pembayaran-tab">
+                    <h3>Teams : {{ $team->count() }}</h3>
+                    <table class="table table-bordered">
+                    <thead>
+                            <tr>
+                            <th scope="col">Team ID</th>
+                            <th scope="col">Team Name</th>
+                            <th scope="col">Leader ID</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Download Bukti Pembayaran</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($team as $teams)
+                            <tr>
+                            <th scope="row">{{  $teams['id'] }}</th>
+                            <td>{{  $teams['name'] }}</td>
+                            <td>{{  $teams['leader_id'] }}</td>
+                            <td>{{  $teams['category'] }}</td>
+                            <td><?php $check = $teams['status_pembayaran'];
+                            if($check == NULL){
+                                echo "Belum bayar";
+                            }else{
+                                echo"Sudah bayar";
+                            }?></td>
+                            <td>
+                            <a href="{{asset('storage/app/'. $teams->status_pembayaran)}}">
+                                <button type="submit" class="download_btn"><i class="fas fa-download"></i></button></a>
+                            </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

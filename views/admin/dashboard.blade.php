@@ -202,7 +202,7 @@
 				<div class="tab-pane fade" id="nav-upload" role="tabpanel" aria-labelledby="nav-upload-tab">
 					<h1>Upload Files</h1>
 					<p class="text-secondary">Upload karya anda sesuai instruksi</p>
-					<form action="{{route('fileUpload')}}" method="post">
+					<form action="" method="post">
 						<div class="container">
 							<div class="row">
 								<div class="col-lg-8 pt-3 pr-3 pb-4 pl-0">

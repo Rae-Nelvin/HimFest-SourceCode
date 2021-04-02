@@ -20,7 +20,8 @@ class CreateAdminsTable extends Migration
             $table->text('password');
             $table->text('category');
             $table->text('referrer');
-            $table->boolean('status')->default(0);
+            $table->string('status_pembayaran')->nullable();
+            $table->string('file_answer')->nullable();
         });
         Schema::create('member', function (Blueprint $table) {
             $table->increments('id');
@@ -30,7 +31,7 @@ class CreateAdminsTable extends Migration
             $table->text('email')->nullable();
             $table->text('lineid')->nullable();
             $table->text('phone')->nullable();
-            $table->text('studentcard')->nullable();
+            $table->string('studentcard')->nullable();
         });
         Schema::create('admin', function (Blueprint $table) {
             $table->increments('id');

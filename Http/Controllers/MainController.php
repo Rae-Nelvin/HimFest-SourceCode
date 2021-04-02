@@ -8,6 +8,8 @@ use App\Models\Member;
 use App\Http\Controllers\Controller;
 use App\Helpers\Helper;
 use App\Models\Admin;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
 
 class MainController extends Controller
 {
@@ -175,5 +177,48 @@ class MainController extends Controller
         $team = Team::all();
         $member = Member::all();
         return view('admin.admin_dashboard',$data,['member'=>$member,'team'=>$team]);
+    }
+
+    function upload_buktibayar_dashboard(){
+        $data = ['LoggedUserInfo' =>Team::where('id','=', session('LoggedUser'))->first()];
+
+        return view('admin.upload_buktibayar',$data);
+    }
+
+    function upload_buktibayar(Request $request){
+
+        $fileName = $request->file;
+        $filePath = $request->file('buktipembayaran')->store('Bukti Pembayaran');
+
+        $teamid = $request->teamid;
+        $team = Team::where('id','=', $teamid)->first();
+        $team->status_pembayaran = 'storage/' . $filePath;
+        $team->save();
+
+        return $filePath;
+    }
+
+    public function download_buktibayar($file){
+        return response()->download(storage_path("storage/app/{$file}"));
+    }
+
+  public function createForm(){
+    return view('file-upload');
+  }
+
+  public function fileUpload(Request $req){
+
+            $file = $req->file('buktipembayaran');
+            $originalName = $file->getClientOriginalName();
+            $filePath = $req->file('buktipembayaran')->store('public/buktibayar');
+            $team = new Team;
+
+            $teamid = $req->teamid;
+            $team = Team::where('id','=', $teamid)->first();
+            $team->status_pembayaran = $filePath;
+            $team->save();
+
+            return $filePath;
+
     }
 }

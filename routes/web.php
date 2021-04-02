@@ -30,7 +30,11 @@ Route::get('view-records','MainController@dashboard');
 Route::group(['middleware'=>['AuthCheck2']], function(){
     Route::get('/admin/dashboard',[MainController::class, 'dashboard']);
     Route::get('/auth/register-member',[MainController::class, 'registermember'])->name('auth.register-member');
-    Route::get('/upload-file',[FileUpload::class, 'createForm']);
-    Route::post('/upload-file',[FileUpload::class, 'fileUpload'])->name('fileUpload'); 
     Route::get('/admin/admin_dashboard',[MainController::class, 'admindashboard']);
+    Route::get('/admin/upload_buktibayar',[MainController::class, 'upload_buktibayar_dashboard']);
+    Route::post('/admin/upload_buktibayar',[MainController::class,'upload_buktibayar']);
+    Route::get('/storage/app/{file}',[MainController::class,'download_buktibayar']);
+    Route::get('/upload-file', [MainController::class, 'createForm']);
+    Route::post('/upload-file', [MainController::class, 'fileUpload'])->name('fileUpload');
+    Route::get('storage/app/{file}', 'MainController@download_buktibayar');
 });
